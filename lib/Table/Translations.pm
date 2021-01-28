@@ -19,6 +19,7 @@ our $VERSION = '0.00_01';
 
 use Table::Readable 'read_table';
 use JSON::Create 'create_json';
+use JSON::Parse; # Used for test only in fact.
 
 my %lang2name;
 

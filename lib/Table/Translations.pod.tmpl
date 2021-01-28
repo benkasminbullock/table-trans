@@ -17,7 +17,7 @@ This method was added in version [% version %] of the module.
 
 =head1 NAME
 
-[% info.colon %] - abstract here.
+[% info.colon %] - simple translations for templating
 
 =head1 SYNOPSIS
 
@@ -30,6 +30,9 @@ corresponding to L<git commit [% commit.commit %]|[% info.repo
 %]/commit/[% commit.commit %]> released on [% commit.date %].
 
 =head1 DESCRIPTION
+
+Very simple translation storage. I made this because TMX was such a
+pain to use.
 
 =head1 FUNCTIONS
 
@@ -45,7 +48,7 @@ the language, like "English".
      get_lang_trans ($trans, $vars, $lang);
 
 Put the translations from $trans for language $lang into
-$vars->{trans}. $vars is for the template toolkit.
+$vars->{trans}.
 
 =head2 read_trans
 
@@ -55,8 +58,7 @@ Also get the order:
 
     my ($trans, $order) = read_trans ('file.txt');
 
-Just like "read_translations" but with the difference that the input
-is in the L<Table::Readable> format rather than XML and fake TMX.
+Read a file of translations in L<Table::Readable> format.
 
 =head2 trans_to_json_file
 
@@ -70,8 +72,7 @@ Convert the translations in F<file.txt> into F<file.json>.
 
 Write the translations stored in C<%trans> for the languages "en",
 "ja" and "es" in the order given by C<@id_order> to the file
-C<output.txt> in the L<Table::Readable> format. See also
-L</write_translations>.
+C<output.txt> in the L<Table::Readable> format.
 
 =head1 FORMAT
 
@@ -97,5 +98,17 @@ then the C<ja> entry for the ID "monkeyshines" will be さるさわぎ and
 the English entry will be "monkeyshines". There is currently no
 cross-language way of getting macros or non-language way of inserting
 them.
+
+=head1 DEPENDENCIES
+
+=over
+
+=item L<JSON::Create>
+
+=item L<JSON::Parse>
+
+=item L<Table::Readable>
+
+=back
 
 [% INCLUDE "author" %]
