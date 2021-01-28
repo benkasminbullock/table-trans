@@ -33,4 +33,69 @@ corresponding to L<git commit [% commit.commit %]|[% info.repo
 
 =head1 FUNCTIONS
 
+=head2 get_lang_name
+
+    my $language = get_lang_name ($lang);
+
+Given a language code like C<en>, convert it into the native name of
+the language, like "English".
+
+=head2 get_lang_trans
+
+     get_lang_trans ($trans, $vars, $lang);
+
+Put the translations from $trans for language $lang into
+$vars->{trans}. $vars is for the template toolkit.
+
+=head2 read_trans
+
+    my $trans = read_trans ('file.txt');
+
+Also get the order:
+
+    my ($trans, $order) = read_trans ('file.txt');
+
+Just like "read_translations" but with the difference that the input
+is in the L<Table::Readable> format rather than XML and fake TMX.
+
+=head2 trans_to_json_file
+
+    trans_to_json_file ('file.txt', 'file.json');
+
+Convert the translations in F<file.txt> into F<file.json>.
+
+=head2 write_trans
+
+     write_trans (\%trans, [qw/en ja es/], "output.txt", \@id_order);
+
+Write the translations stored in C<%trans> for the languages "en",
+"ja" and "es" in the order given by C<@id_order> to the file
+C<output.txt> in the L<Table::Readable> format. See also
+L</write_translations>.
+
+=head1 FORMAT
+
+The basic format of the translations is in L<Table::Readable> format
+with each translated piece of text being identified with the code
+C<id> then each particular language having its own entry.
+
+=head2 Macros
+
+Macros to insert another translation can be used in the form C<{{id}}>
+and the translation of C<id> in the language of the entry will be
+inserted, so if we have
+
+    id: ape
+    en: monkey
+    ja: さる
+
+    id: monkeyshines
+    en: {{ape}}shines
+    ja: {{ape}}さわぎ
+
+then the C<ja> entry for the ID "monkeyshines" will be さるさわぎ and
+the English entry will be "monkeyshines". There is currently no
+cross-language way of getting macros or non-language way of inserting
+them.
+
 [% INCLUDE "author" %]
