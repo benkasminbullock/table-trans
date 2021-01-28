@@ -14,12 +14,13 @@ Table::Trans - simple translations for templating
 =head1 VERSION
 
 This documents version 0.00_01 of Table-Trans
-corresponding to L<git commit 9b9b0b6002304d6c1e40118afd900c2be5faa9f6|https://github.com/benkasminbullock/table-trans/commit/9b9b0b6002304d6c1e40118afd900c2be5faa9f6> released on Thu Jan 28 23:49:21 2021 +0900.
+corresponding to L<git commit 08dce6e613ad1b09d4c5db6b9509451dbca9a56a|https://github.com/benkasminbullock/table-trans/commit/08dce6e613ad1b09d4c5db6b9509451dbca9a56a> released on Fri Jan 29 08:34:42 2021 +0900.
 
 =head1 DESCRIPTION
 
-Very simple translation storage. I made this because TMX was such a
-pain to use.
+Very simple translation storage based on the L<Table::Readable>
+format. We made this because TMX (Translation Memory eXchange, an XML
+format) was such a pain to use.
 
 =head1 FUNCTIONS
 
@@ -63,9 +64,12 @@ C<output.txt> in the L<Table::Readable> format.
 
 =head1 FORMAT
 
-The basic format of the translations is in L<Table::Readable> format
+The basic format of the translations is the L<Table::Readable> format,
 with each translated piece of text being identified with the code
 C<id> then each particular language having its own entry.
+
+Unfortunately the language code for Indonesian is C<id>, so this
+module may have to be updated to cope with the Indonesian language.
 
 =head2 Macros
 
@@ -92,9 +96,15 @@ them.
 
 =item L<JSON::Create>
 
+This is used for storing the translations in JSON format.
+
 =item L<JSON::Parse>
 
+This is only used by the tests.
+
 =item L<Table::Readable>
+
+This is used as the basic format for storing and editing translations.
 
 =back
 

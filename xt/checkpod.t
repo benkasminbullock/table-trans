@@ -10,7 +10,7 @@ binmode $builder->todo_output,    ":utf8";
 binmode STDOUT, ":encoding(utf8)";
 binmode STDERR, ":encoding(utf8)";
 use Perl::Build::Pod qw/pod_checker pod_link_checker/;
-my $filepath = "$Bin/../lib/Table/Translations.pod";
+my $filepath = "$Bin/../lib/Table/Trans.pod";
 my $errors = pod_checker ($filepath);
 ok (@$errors == 0, "No errors");
 if (@$errors > 0) {
