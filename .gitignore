@@ -1,0 +1,20 @@
+# Generated from Makefile.PL
+Makefile
+Makefile.old
+Makefile.bak
+# Ignore distribution files.
+Table-Translations-[0-9]*/
+Table-Translations-[0-9]*.tar.gz
+# Ignore outputs of XS compilation.
+Translations.c
+Translations.bs
+# Ignore Perl compilation files.
+pm_to_blib
+blib/*
+MYMETA.*
+META.*
+ppport.h
+lib/Table/Translations.pod
+MANIFEST
+README
+examples/*-out.txt
