@@ -2,12 +2,12 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
-my $pm = 'lib/Table/Translations.pm';
-my $pod = 'lib/Table/Translations.pod';
-my $github = 'github.com/benkasminbullock/table-translations';
+my $pm = 'lib/Table/Trans.pm';
+my $pod = 'lib/Table/Trans.pod';
+my $github = 'github.com/benkasminbullock/table-trans';
 my $repo = "https://$github";
 WriteMakefile (
-    NAME => 'Table::Translations',
+    NAME => 'Table::Trans',
     VERSION_FROM => $pm,
     ABSTRACT_FROM => $pod,
     AUTHOR => 'Ben Bullock <bkb@cpan.org>',

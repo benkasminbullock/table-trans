@@ -1,0 +1,118 @@
+
+
+
+=encoding UTF-8
+
+=head1 NAME
+
+Table::Trans - simple translations for templating
+
+=head1 SYNOPSIS
+
+    use Table::Trans;
+
+=head1 VERSION
+
+This documents version 0.00_01 of Table-Trans
+corresponding to L<git commit 9b9b0b6002304d6c1e40118afd900c2be5faa9f6|https://github.com/benkasminbullock/table-trans/commit/9b9b0b6002304d6c1e40118afd900c2be5faa9f6> released on Thu Jan 28 23:49:21 2021 +0900.
+
+=head1 DESCRIPTION
+
+Very simple translation storage. I made this because TMX was such a
+pain to use.
+
+=head1 FUNCTIONS
+
+=head2 get_lang_name
+
+    my $language = get_lang_name ($lang);
+
+Given a language code like C<en>, convert it into the native name of
+the language, like "English".
+
+=head2 get_lang_trans
+
+     get_lang_trans ($trans, $vars, $lang);
+
+Put the translations from $trans for language $lang into
+$vars->{trans}.
+
+=head2 read_trans
+
+    my $trans = read_trans ('file.txt');
+
+Also get the order:
+
+    my ($trans, $order) = read_trans ('file.txt');
+
+Read a file of translations in L<Table::Readable> format.
+
+=head2 trans_to_json_file
+
+    trans_to_json_file ('file.txt', 'file.json');
+
+Convert the translations in F<file.txt> into F<file.json>.
+
+=head2 write_trans
+
+     write_trans (\%trans, [qw/en ja es/], "output.txt", \@id_order);
+
+Write the translations stored in C<%trans> for the languages "en",
+"ja" and "es" in the order given by C<@id_order> to the file
+C<output.txt> in the L<Table::Readable> format.
+
+=head1 FORMAT
+
+The basic format of the translations is in L<Table::Readable> format
+with each translated piece of text being identified with the code
+C<id> then each particular language having its own entry.
+
+=head2 Macros
+
+Macros to insert another translation can be used in the form C<{{id}}>
+and the translation of C<id> in the language of the entry will be
+inserted, so if we have
+
+    id: ape
+    en: monkey
+    ja: さる
+
+    id: monkeyshines
+    en: {{ape}}shines
+    ja: {{ape}}さわぎ
+
+then the C<ja> entry for the ID "monkeyshines" will be さるさわぎ and
+the English entry will be "monkeyshines". There is currently no
+cross-language way of getting macros or non-language way of inserting
+them.
+
+=head1 DEPENDENCIES
+
+=over
+
+=item L<JSON::Create>
+
+=item L<JSON::Parse>
+
+=item L<Table::Readable>
+
+=back
+
+
+
+=head1 AUTHOR
+
+Ben Bullock, <bkb@cpan.org>
+
+=head1 COPYRIGHT & LICENCE
+
+This package and associated files are copyright (C) 
+2021
+Ben Bullock.
+
+You can use, copy, modify and redistribute this package and associated
+files under the Perl Artistic Licence or the GNU General Public
+Licence.
+
+
+

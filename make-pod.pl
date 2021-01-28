@@ -23,7 +23,7 @@ my $info = get_info (%pbv);
 my $commit = get_commit (%pbv);
 # Names of the input and output files containing the documentation.
 
-my $pod = 'Translations.pod';
+my $pod = 'Trans.pod';
 my $input = "$Bin/lib/Table/$pod.tmpl";
 my $output = "$Bin/lib/Table/$pod";
 

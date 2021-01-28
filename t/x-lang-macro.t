@@ -9,7 +9,7 @@ binmode $builder->failure_output, ":utf8";
 binmode $builder->todo_output,    ":utf8";
 binmode STDOUT, ":encoding(utf8)";
 binmode STDERR, ":encoding(utf8)";
-use Table::Translations 'read_trans';
+use Table::Trans 'read_trans';
 my $tin = <<EOF;
 id: baby
 en: babystuff

@@ -1,4 +1,4 @@
-package Table::Translations;
+package Table::Trans;
 use warnings;
 use strict;
 use Carp;
@@ -26,7 +26,7 @@ my %lang2name;
 sub add_trans
 {
     my ($trans, $file) = @_;
-    my $trans2 = read_translations_table ($file);
+    my $trans2 = read_trans_table ($file);
     for my $id (keys %$trans2) {
 	if ($trans->{$id}) {
 	    warn "$id is duplicated.\n";
@@ -88,7 +88,7 @@ sub get_lang_name
     my ($lang) = @_;
     if (scalar (keys %lang2name) == 0) {
 	my $l2nfile = __FILE__;
-	$l2nfile =~ s!Translations\.pm!l2n.txt!;
+	$l2nfile =~ s!Trans\.pm!l2n.txt!;
 	my @langs = read_table ($l2nfile);
 	for (@langs) {
 	    $lang2name{$_->{lang}} = $_->{name};
@@ -105,10 +105,10 @@ sub get_lang_name
 sub read_trans
 {
     my ($input_file) = @_;
-    my @translations = read_table (@_);
+    my @trans = read_table (@_);
     my %trans;
     my @order;
-    for my $translation (@translations) {
+    for my $translation (@trans) {
         my $id = $translation->{id};
         if ($trans{$id}) {
             die "Duplicate translation for id '$id'.\n";
@@ -142,8 +142,8 @@ sub read_trans
 sub trans_to_json_file
 {
     my ($trans_file, $json_file) = @_;
-    my $translations = read_trans ($trans_file);
-    my $json = create_json ($translations, indent => 1, sort => 1);
+    my $trans = read_trans ($trans_file);
+    my $json = create_json ($trans, indent => 1, sort => 1);
     open my $out, ">:encoding(utf8)", $json_file
         or croak "open $json_file: $!";
     print $out $json;
@@ -155,7 +155,7 @@ sub write_trans
 {
     my ($trans, $lang_ref, $file_name, $id_order_ref) = @_;
     if (ref $lang_ref ne 'ARRAY') {
-        croak "write_translations_table requires an array reference of languages to print as its second argument.";
+        croak "write_trans requires an array reference of languages to print as its second argument.";
     }
     open my $output, '>:encoding(utf8)', $file_name or die $!;
     my @id_order;
