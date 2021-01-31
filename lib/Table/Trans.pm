@@ -8,6 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw/
     add_trans
     get_lang_name
+    get_lang_trans
     read_trans
     trans_to_json_file
     write_trans
