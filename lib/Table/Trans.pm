@@ -91,8 +91,8 @@ sub get_lang_name
 	my $l2nfile = __FILE__;
 	$l2nfile =~ s!Trans\.pm!l2n.txt!;
 	my @langs = read_table ($l2nfile);
-	for (@langs) {
-	    $lang2name{$_->{lang}} = $_->{name};
+	for my $lang (@langs) {
+	    $lang2name{$lang->{lang}} = $lang->{name};
 	}
     }
     my $name = $lang2name{$lang};
