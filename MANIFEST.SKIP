@@ -1,5 +1,5 @@
 # Exclude the author-only build scripts
-(build|make-pod|clean)\.pl
+(build|make-pod|clean|modules)\.pl
 # Exclude the built module
 blib/.*
 # Exclude all git files
@@ -23,3 +23,5 @@ MYMETA..*
 ^examples/.*-out\.txt$
 # Author tests
 ^xt/.*.t$
+^see-also-info\.json$
+
