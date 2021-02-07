@@ -1,4 +1,4 @@
-[% start_year=2021 %]
+[% start_year=2008 %]
 [% MACRO example(file) BLOCK %]
 [%- pl =  file _ ".pl" -%]
 [%- out = file _ "-out.txt" -%]
@@ -8,7 +8,7 @@ produces output
 
 [% INCLUDE $out | xtidy %]
 
-(This example is included as L<F<[% pl %]>|https://fastapi.metacpan.org/source/BKB/Table-Translations-[% info.version %]/examples/[% pl %]> in the distribution.)
+(This example is included as L<F<[% pl %]>|https://fastapi.metacpan.org/source/BKB/Table-Trans-[% info.version %]/examples/[% pl %]> in the distribution.)
 [% END %]
 [% MACRO since(version) BLOCK -%]
 This method was added in version [% version %] of the module.
@@ -17,7 +17,7 @@ This method was added in version [% version %] of the module.
 
 =head1 NAME
 
-[% info.colon %] - simple translations for templating
+[% info.colon %] - A simple translation system for templating
 
 =head1 SYNOPSIS
 
@@ -31,9 +31,8 @@ corresponding to L<git commit [% commit.commit %]|[% info.repo
 
 =head1 DESCRIPTION
 
-Very simple translation storage based on the L<Table::Readable>
-format. We made this because TMX (Translation Memory eXchange, an XML
-format) was such a pain to use.
+This module provides simple translation storage based on the
+L<Table::Readable> format.
 
 =head1 FUNCTIONS
 
@@ -61,6 +60,11 @@ Also get the order:
 
 Read a file of translations in L<Table::Readable> format.
 
+The same options as L<Table::Readable/read_table> are accepted. To
+read from a scalar instead of a file, use C<< scalar => 1 >>:
+
+    my $trans = read_trans ($text, scalar => 1);
+
 =head2 trans_to_json_file
 
     trans_to_json_file ('file.txt', 'file.json');
@@ -81,9 +85,6 @@ The basic format of the translations is the L<Table::Readable> format,
 with each translated piece of text being identified with the code
 C<id> then each particular language having its own entry.
 
-Unfortunately the language code for Indonesian is C<id>, so this
-module may have to be updated to cope with the Indonesian language.
-
 =head2 Macros
 
 Macros to insert another translation can be used in the form C<{{id}}>
@@ -94,14 +95,24 @@ inserted, so if we have
     en: monkey
     ja: さる
 
-    id: monkeyshines
-    en: {{ape}}shines
+    id: monkeybusiness
+    en: {{ape}} business
     ja: {{ape}}さわぎ
 
-then the C<ja> entry for the ID "monkeyshines" will be さるさわぎ and
-the English entry will be "monkeyshines". There is currently no
-cross-language way of getting macros or non-language way of inserting
-them.
+then the C<ja> (Japanese) entry for the ID "monkeybusiness" will be さ
+るさわぎ and the English entry will be "monkey business".
+
+To use the same substitution for every language, use the key "all":
+
+    id: email
+    all: bkb@cpan.org
+
+    id: contact
+    en: Email me at <a href='mailto:{{email}}'>{{email}}</a>
+    ja: メルアド：<a href='mailto:{{email}}'>{{email}}</a>
+
+If either C<all> or the specific language translation (C<en> or C<ja>)
+does not exist, a fatal error occurs.
 
 =head1 DEPENDENCIES
 
@@ -118,6 +129,97 @@ This is only used by the tests.
 =item L<Table::Readable>
 
 This is used as the basic format for storing and editing translations.
+
+=back
+
+=head1 BUGS
+
+=over
+
+=item id is Indonesian
+
+Unfortunately the two-letter ISO code for the Indonesian language is
+C<id>, so at some point it will become necessary to change to a
+different key. I haven't done it yet due to the work involved in
+changing a large number of files over to a different key, and because
+I am not currently supporting Indonesian language anywhere.
+
+=back
+
+=head1 SEE ALSO
+
+=head2 CPAN
+
+There are several modules on CPAN for dealing with the GNU gettext
+format, and one for dealing with the TMX format for human-language
+translations.
+
+[% PROCESS 'cpm.pod' %]
+
+=head3 GNU gettext
+
+=over
+
+[% cpm("Data::Localize::Gettext") %]
+
+[% cpm("File::Gettext") %]
+
+[% cpm("Gettext") %]
+
+[% cpm("Locale::gettext") %]
+
+[% cpm("Locale::Maketext::Gettext") %]
+
+[% cpm("Locale::XGettext") %]
+
+[% cpm("qbit::GetText") %]
+
+=back
+
+=head3 Other formats and ideas
+
+=over
+
+[% cpm("Lingua::String") %]
+
+Strings which come out in different languages depending on the
+environment.
+
+[% cpm("Locale::Country::Multilingual") %]
+
+This does something like L</get_lang_name> in this module, but more
+comprehensively.
+
+[% cpm("MetaTrans") %]
+
+"Class for creating multilingual meta-translators"
+
+[% cpm("Pangloss") %]
+
+"A multilingual web-based glossary." There's a huge amount of code
+here, but the last update was in 2004.
+
+[% cpm("XML::TMX") %]
+
+This module supports the TMX (Translation Memory eXchange) format,
+which is XML.
+
+=back
+
+=head2 Other
+
+=over
+
+=item OmegaT
+
+L<OmegaT|https://en.wikipedia.org/wiki/OmegaT> (link to Wikipedia) is
+a free-software translation system in Java which supports Gettext and
+TMX.
+
+=item Trados
+
+L<Trados|https://en.wikipedia.org/wiki/SDL_Trados_Studio> (link to
+Wikipedia) is the most popular commercial translation memory software.
 
 =back
 

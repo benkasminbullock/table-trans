@@ -16,10 +16,10 @@ our @EXPORT_OK = qw/
 our %EXPORT_TAGS = (
     all => \@EXPORT_OK,
 );
-our $VERSION = '0.00_01';
+our $VERSION = '0.00_02';
 
-use Table::Readable 'read_table';
-use JSON::Create 'create_json';
+use Table::Readable '0.05', qw!read_table read_table_hash!;
+use JSON::Create 'write_json';
 use JSON::Parse; # Used for test only in fact.
 
 my %lang2name;
@@ -105,52 +105,21 @@ sub get_lang_name
 
 sub read_trans
 {
-    my ($input_file) = @_;
-    my @trans = read_table (@_);
-    my %trans;
-    my @order;
-    for my $translation (@trans) {
-        my $id = $translation->{id};
-        if ($trans{$id}) {
-            die "Duplicate translation for id '$id'.\n";
-        }
-        if (! $id) {
-            my $has = join ", ", %$translation;
-            die "Translation without an ID in '$input_file', looks like '$has'.\n";
-        }
-        $trans{$id} = $translation;
-        push @order, $id;
-        #print "$id\n";
+    my ($input_file, %options) = @_;
+    my ($trans, $order) = read_table_hash ($input_file, 'id', %options);
+    x_link ($trans, $order);
+    if (wantarray ()) {
+        return ($trans, $order);
     }
-    # Trim whitespace
-    for my $id (@order) {
-        for my $lang (keys %{$trans{$id}}) {
-            $trans{$id}{$lang} =~ s/^\s+|\s+$//g;
-        }
-    }
-    x_link (\%trans, \@order);
-    if (wantarray) {
-        return (\%trans, \@order);
-    }
-    else {
-        return \%trans;
-    }
-
+    return $trans;
 }
-
-
 
 sub trans_to_json_file
 {
     my ($trans_file, $json_file) = @_;
     my $trans = read_trans ($trans_file);
-    my $json = create_json ($trans, indent => 1, sort => 1);
-    open my $out, ">:encoding(utf8)", $json_file
-        or croak "open $json_file: $!";
-    print $out $json;
-    close $out or die $!;
+    write_json ($json_file, $trans, indent => 1, sort => 1);
 }
-
 
 sub write_trans
 {
@@ -210,7 +179,5 @@ sub x_link
         }
     }
 }
-
-
 
 1;

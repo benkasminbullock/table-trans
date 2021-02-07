@@ -51,6 +51,8 @@ my $tt = Template->new (
     STRICT => 1,
 );
 
+$vars{mod2info} = mod2info ("$Bin/see-also-info.json");
+
 my @examples = <$Bin/examples/*.pl>;
 for my $example (@examples) {
     my $output = $example;

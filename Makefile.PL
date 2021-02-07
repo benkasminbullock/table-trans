@@ -15,7 +15,7 @@ WriteMakefile (
     PREREQ_PM => {
 	'JSON::Parse' => '0.60',
 	'JSON::Create' => '0.30',
-	'Table::Readable' => '0',
+	'Table::Readable' => '0.05',
     },
     META_MERGE => {
 	'meta-spec' => {
