@@ -16,7 +16,7 @@ our @EXPORT_OK = qw/
 our %EXPORT_TAGS = (
     all => \@EXPORT_OK,
 );
-our $VERSION = '0.00_02';
+our $VERSION = '0.00_03';
 
 use Table::Readable '0.05', qw!read_table read_table_hash!;
 use JSON::Create 'write_json';
