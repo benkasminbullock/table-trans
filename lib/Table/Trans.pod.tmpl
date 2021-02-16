@@ -48,7 +48,21 @@ the language, like "English".
      get_lang_trans ($trans, $vars, $lang);
 
 Put the translations from $trans for language $lang into
-$vars->{trans}.
+$vars->{trans}. This is intended for the case where you want to run a
+template file several times with different languages. For example
+using L<Template> you might have
+
+    [ % trans.frog % ]
+
+in your template, then run it with
+
+    for my $lang (qw!en ja de!) {
+        get_lang_trans ($trans, \%vars, $lang);
+        $vars{lang} = $lang;
+        $tt->process ('in.tmpl', \%vars, "out.$lang.html", binmode => 'utf8');
+    }
+
+to produce similar outputs in three languages.
 
 =head2 read_trans
 
