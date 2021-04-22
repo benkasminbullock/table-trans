@@ -36,6 +36,15 @@ L<Table::Readable> format.
 
 =head1 FUNCTIONS
 
+=head2 add_trans
+
+    add_trans ($trans, "$Bin/lang/translations.txt");
+
+Add translations to C<$trans> from another file. This is like
+L</read_trans> but it enables you to use more than one file of
+translations. If there are two translations with the same C<id> value,
+it prints a warning.
+
 =head2 get_lang_name
 
     my $language = get_lang_name ($lang);
@@ -63,6 +72,13 @@ in your template, then run it with
     }
 
 to produce similar outputs in three languages.
+
+=head2 get_single_trans
+
+    my $label = get_single_trans ($trans, $id, $lang);
+
+Given C<$trans> as read by L</read_trans>, get a single translation of
+C<$id> for C<$lang>.
 
 =head2 read_trans
 
